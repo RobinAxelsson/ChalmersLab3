@@ -41,9 +41,6 @@ def matmul(matrixA, matrixB):
 def __zipSumRows(rowA, columnB):
     return sum([valA*valB for valA, valB in zip(rowA, columnB)])
 
-
-### INVERT ###
-
 def invert(matrix2v2):
     a = matrix2v2[0][0]
     b = matrix2v2[0][1]
@@ -52,6 +49,17 @@ def invert(matrix2v2):
     det = a*d - b*c
     return [[d/det, -b/det], [-c/det, a/det]]
 
+def loadtxt(filename):
+    with open(filename) as textFile:
+        lines = textFile.readlines()
+    matrix = []
+    for line in lines:
+        matrix.append([float(val) for val in line.split()])
+    return matrix
+
+if __name__ == '__main__':
+    if loadtxt("chirps.txt") == [[12.5, 81.0], [15.27778, 97.0], [17.5, 103.0], [19.72222, 123.0], [22.2222, 150.0], [25.83333, 182.0], [28.3333, 195.0]]:
+        print('PASS!')
 
 ### EXTRA MIRROR MATRIX ###
 
