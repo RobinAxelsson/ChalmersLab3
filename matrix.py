@@ -27,8 +27,31 @@ def matmul(mA, mB):
         raise ValueError("Must input two matrix")
     if len(mA) == 0 or len(mB) == 0:
         return []
-    mbReverse = transpose(mB)
-    if len(mA[0]) != len(mbReverse[0]):
+    mBReverse = transpose(mB)
+    if len(mA[0]) != len(mBReverse[0]):
         raise ValueError('Matricies must match')
-    for a, b in zip(mA, mbReverse):
-        
+    mC = []
+    for row in mA:
+        mC.append(buildZipSum(row, mBReverse))
+    return mC
+
+def zipsumRows(rowA, columnB):
+    return sum([valA*valB for valA, valB in zip(rowA, columnB)])
+
+def buildZipSum(rowA, columns):
+    out = []
+    for c in columns:
+        out.append(zipsumRows(rowA, c))
+    return out
+
+if zipsumRows([1, 2, 3], [7, 11, 15]) == 74:
+    print('zipSumRows: pass')
+
+if buildZipSum([1,2,3], [[7, 11, 15]]) == [74]:
+    print('buildZipSum: pass')
+
+t3 = buildZipSum([1,2,3], [[7, 11, 15], [8,12,16], [9, 13, 17], [10, 14, 18]])
+if t3 == [74, 80, 86, 92]:
+    print('3: Pass')
+else:
+    print(t3)

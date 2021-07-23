@@ -40,24 +40,24 @@ def run(src_path=None):
 	# else:
 	# 	print("loadtxt is not implemented yet!")
 
-	if hasattr(matrix, "powers"):
-		fun_count = fun_count + 1
-		test(matrix.powers, ([],0,10), [])
-		test(matrix.powers, ([2],0,2), [[1, 2, 4]])
-		test(matrix.powers, ([2],0,0), [[1]])
-		test(matrix.powers, ([2],0,-1), [[]])
-		test(matrix.powers, ([2,3],0,2), [[1, 2, 4], [1, 3, 9]])
-	else:
-		print("powers is not implemented yet!")
+	# if hasattr(matrix, "powers"):
+	# 	fun_count = fun_count + 1
+	# 	test(matrix.powers, ([],0,10), [])
+	# 	test(matrix.powers, ([2],0,2), [[1, 2, 4]])
+	# 	test(matrix.powers, ([2],0,0), [[1]])
+	# 	test(matrix.powers, ([2],0,-1), [[]])
+	# 	test(matrix.powers, ([2,3],0,2), [[1, 2, 4], [1, 3, 9]])
+	# else:
+	# 	print("powers is not implemented yet!")
 
-	if hasattr(matrix, "transpose"):
-		fun_count = fun_count + 1
-		test(matrix.transpose, [], [])
-		test(matrix.transpose, [[1]], [[1]])
-		test(matrix.transpose, [[1,2,3]], [[1],[2],[3]])
-		test(matrix.transpose, [[1,2,3],[4,5,6]], [[1,4],[2,5],[3,6]])
-	else:
-		print("transpose is not implemented yet!")
+	# if hasattr(matrix, "transpose"):
+	# 	fun_count = fun_count + 1
+	# 	test(matrix.transpose, [], [])
+	# 	test(matrix.transpose, [[1]], [[1]])
+	# 	test(matrix.transpose, [[1,2,3]], [[1],[2],[3]])
+	# 	test(matrix.transpose, [[1,2,3],[4,5,6]], [[1,4],[2,5],[3,6]])
+	# else:
+	# 	print("transpose is not implemented yet!")
 
 	if hasattr(matrix, "matmul"):
 		fun_count = fun_count + 1
