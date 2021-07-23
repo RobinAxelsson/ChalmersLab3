@@ -22,36 +22,88 @@ def powers(listVals: list[int], first: int, last: int):
         outMatrix.append([val**i for i in range(first, last+1)])
     return outMatrix
 
-def matmul(mA, mB):
-    if isinstance(mA, list) == False or isinstance(mB, list) == False:
+def matmul(matrixA, matrixB):
+    if isinstance(matrixA, list) == False or isinstance(matrixB, list) == False:
         raise ValueError("Must input two matrix")
-    if len(mA) == 0 or len(mB) == 0:
+    if len(matrixA) == 0 or len(matrixB) == 0:
         return []
-    mBReverse = transpose(mB)
-    if len(mA[0]) != len(mBReverse[0]):
+    mBReverse = transpose(matrixB)
+    if len(matrixA[0]) != len(mBReverse[0]):
         raise ValueError('Matricies must match')
-    mC = []
-    for row in mA:
-        mC.append(buildZipSum(row, mBReverse))
-    return mC
 
-def zipsumRows(rowA, columnB):
+    matrixC = []
+    for row in matrixA:
+        newRow = [__zipSumRows(row, col) for col in mBReverse]
+        matrixC.append(newRow)
+        
+    return matrixC
+
+def __zipSumRows(rowA, columnB):
     return sum([valA*valB for valA, valB in zip(rowA, columnB)])
 
-def buildZipSum(rowA, columns):
-    out = []
-    for c in columns:
-        out.append(zipsumRows(rowA, c))
-    return out
 
-if zipsumRows([1, 2, 3], [7, 11, 15]) == 74:
-    print('zipSumRows: pass')
+### INVERT ###
 
-if buildZipSum([1,2,3], [[7, 11, 15]]) == [74]:
-    print('buildZipSum: pass')
+def invert(matrix2v2):
+    a = matrix2v2[0][0]
+    b = matrix2v2[0][1]
+    c = matrix2v2[1][0]
+    d = matrix2v2[1][1]
+    det = a*d - b*c
+    return [[d/det, -b/det], [-c/det, a/det]]
 
-t3 = buildZipSum([1,2,3], [[7, 11, 15], [8,12,16], [9, 13, 17], [10, 14, 18]])
-if t3 == [74, 80, 86, 92]:
-    print('3: Pass')
-else:
-    print(t3)
+
+### EXTRA MIRROR MATRIX ###
+
+def mirrorMatrix(matrix):
+    vals = mapMatrix(matrix)
+    reverseVals(vals)
+    return buildMatrix(vals)
+class Value:
+    def __init__(self,x,y,val):
+        self.x = x
+        self.y = y
+        self.val = val
+        
+def searchVal(vals: list[Value], x, y):
+    for v in vals:
+        if v.x == x and v.y == y:
+            return v.val
+    else:
+        raise IndexError(f"x or y ({x},{y}) value does not exist")
+
+def mapMatrix(matrix):
+    vals: list[Value] = []
+    for y, row in enumerate(matrix):
+        for x, val in enumerate(row):
+            vals.append(Value(x,y,val))
+    return vals
+
+
+def reverseVals(values: list[Value]):
+    Xs = set([val.x for val in values])
+    Ys = set(([val.y for val in values]))
+    Xs_rev = [x for x in reversed(list(Xs))]
+    Ys_rev = [y for y in reversed(list(Ys))]
+
+    xDict = {}
+    for x, x_rev in zip(Xs, Xs_rev):
+        xDict[x] = x_rev
+    yDict = {}
+    for y, y_rev in zip(Ys, Ys_rev):
+        yDict[y] = y_rev
+
+    for val in values:
+        val.x = xDict[val.x]
+        val.y = yDict[val.y]
+
+def buildMatrix(values: list[Value]):
+    rows = max([val.x for val in values])+1
+    columns = max([val.y for val in values])+1
+    matrix = []
+    for x in range(rows):
+        newRow = []
+        for y in range(columns):
+            newRow.append(searchVal(values, x, y))
+        matrix.append(newRow)
+    return matrix
