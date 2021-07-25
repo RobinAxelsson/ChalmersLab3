@@ -42,10 +42,7 @@ def __zipSumRows(rowA, columnB):
     return sum([valA*valB for valA, valB in zip(rowA, columnB)])
 
 def invert(matrix2v2):
-    a = matrix2v2[0][0]
-    b = matrix2v2[0][1]
-    c = matrix2v2[1][0]
-    d = matrix2v2[1][1]
+    [[a, b],[c, d]] = matrix2v2
     det = a*d - b*c
     return [[d/det, -b/det], [-c/det, a/det]]
 
